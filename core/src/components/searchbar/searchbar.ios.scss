@@ -33,9 +33,8 @@
   @include position(0, null, null, 8px, true);
 
   @include rtl(true) {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   position: absolute;
@@ -71,9 +70,8 @@
   @include background-position(center);
 
   @include rtl(true) {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     right: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   position: absolute;

@@ -24,9 +24,8 @@
   @include position(11px, null, null, 16px, true);
 
   @include rtl(true) {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   width: $searchbar-md-input-search-icon-size + 1;
@@ -41,9 +40,8 @@
   @include position(0, null, null, 5px, true);
 
   @include rtl(true) {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   background-color: $searchbar-md-cancel-button-background-color;
@@ -92,9 +90,8 @@
   @include padding(0);
 
   @include rtl(true) {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     right: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   position: absolute;

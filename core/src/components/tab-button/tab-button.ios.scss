@@ -30,9 +30,8 @@
   @include position(4px, null, null, calc(50% + 6px), true);
 
   @include rtl(true) {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 
   height: auto;
@@ -101,9 +100,8 @@
   @include position(null, null, null, calc(50% + 12px), true);
 
   @include rtl() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 }
 
@@ -126,9 +124,8 @@
   @include position(10px, null, null, calc(50% + 35px), true);
 
   @include rtl() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 }
 
@@ -142,9 +139,8 @@
   @include position(10px, null, null, calc(50% + 30px), true);
 
   @include rtl() {
-    /* stylelint-disable property-blacklist */
+    /* stylelint-disable-next-line property-blacklist */
     left: unset;
-    /* stylelint-enable property-blacklist */
   }
 }
 
