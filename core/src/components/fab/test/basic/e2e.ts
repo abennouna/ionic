@@ -1,19 +1,17 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { testDisabledFab, testFab } from '../test.utils';
 
 test('fab: basic', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/fab/test/basic?ionic:_testing=true'
-  });
-
-  const compare = await page.compareScreenshot('fab: basic');
-  expect(compare).toMatchScreenshot();
+  await testFab('basic', '#fab1');
 });
 
-test('fab: basic-rtl', async () => {
-  const page = await newE2EPage({
-    url: '/src/components/fab/test/basic?ionic:_testing=true&rtl=true'
-  });
+test('fab:rtl: basic', async () => {
+  await testFab('basic', '#fab1', true);
+});
 
-  const compare = await page.compareScreenshot('fab: basic-rtl');
-  expect(compare).toMatchScreenshot();
+test('fab: disabled', async () => {
+  await testDisabledFab('basic', '#fab2');
+});
+
+test('fab:rtl: disabled', async () => {
+  await testDisabledFab('basic', '#fab2', true);
 });
