@@ -153,8 +153,18 @@
 @mixin rtl() {
   $root: #{&};
 
-  @at-root #{add-root-selector($root, "[dir=rtl]")} {
-    @content;
+  $atRootSelector: #{add-root-selector($root, "[dir=rtl]")};
+  @if $atRootSelector != "" {
+    @at-root #{$atRootSelector} {
+      @content;
+    }
+  }
+
+  $atCompatRootSelector: #{add-compat-root-selector($root, "[dir=rtl]")};
+  @if $atCompatRootSelector != "" {
+    @at-root #{$atCompatRootSelector} {
+      @content;
+    }
   }
 }
 

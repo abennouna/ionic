@@ -21,6 +21,49 @@
     </ion-header>
 
     <ion-content class="ion-padding" id="content">
+      <style>
+        .test-text-float-col {
+          padding: 5px;
+        }
+
+        .test-text-float-col-33 {
+          width: 33%;
+        }
+
+        .test-text-float-grid {
+          padding: 0 0 20px 0;
+        }
+
+        .test-text-float-col div {
+          background-color: #f5f7fa;
+          border: 1px solid #e4e8f0;
+          padding: 5px;
+        }
+
+        .test-text-float-row:after {
+          content: "";
+          clear: both;
+          display: block;
+        }
+      </style>
+      <div class="test-text-float-grid">
+        <div class="test-text-float-row">
+          <div class="test-text-float-col test-text-float-col-33 ion-float-start ion-float-md-end">
+            <div>
+              <h3>float-start (should be float-end above md breakpoint)</h3>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac vehicula lorem.
+            </div>
+          </div>
+
+          <div class="test-text-float-col test-text-float-col-33 ion-float-end ion-float-md-start">
+            <div>
+              <h3>float-end (should be float-start above md breakpoint)</h3>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac vehicula lorem.
+            </div>
+          </div>
+        </div>
+      </div>
+
       <ion-text color="secondary">
         <h1>H1: The quick brown fox jumps over the lazy dog</h1>
       </ion-text>

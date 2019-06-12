@@ -144,8 +144,23 @@
     // If the selector does not contain host at all it is either a shadow
     // or normal element so append both the dir check and host-context
     } @else {
-      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
       $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+    }
+  }
+
+  @return $list;
+}
+
+@function add-compat-root-selector($root, $addHostSelector) {
+  $selectors: str-split($root, ",");
+
+  $list: ();
+
+  @each $selector in $selectors {
+    // If the selector does not contain host at all it is either a shadow
+    // or normal element so append both the dir check and host-context
+    @if str-contains($selector, ":host") == false {
+      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
     }
   }
 
