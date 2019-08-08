@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch, h } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, Watch, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
 
@@ -20,9 +21,10 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'queue' }) queue!: QueueApi;
+  /**
+   * The mode determines which platform styles to use.
+   */
+  @Prop({ mutable: true }) mode = getIonMode(this);
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
@@ -150,16 +152,14 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     // emit nav will change event
     this.ionNavWillChange.emit();
 
-    const mode = getIonMode(this);
-    const { win, el } = this;
-    const animated = this.animated && this.config.getBoolean('animated', true);
-    const animationBuilder = this.animation || opts.animationBuilder || this.config.get('navAnimation');
+    const { el, mode } = this;
+    const animated = this.animated && config.getBoolean('animated', true);
+    const animationBuilder = this.animation || opts.animationBuilder || config.get('navAnimation');
 
     await transition({
       mode,
       animated,
       animationBuilder,
-      window: win,
       enteringEl,
       leavingEl,
       baseEl: el,

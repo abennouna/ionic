@@ -77,7 +77,6 @@ export class ToastExample {
 ```javascript
 async function presentToast() {
   const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
 
   const toast = await toastController.create({
     message: 'Your settings have been saved.',
@@ -88,7 +87,6 @@ async function presentToast() {
 
 async function presentToastWithOptions() {
   const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
 
   const toast = await toastController.create({
     header: 'Toast header',
@@ -174,7 +172,7 @@ export const ToastExample: React.FunctionComponent = () => {
 | ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ----------- |
 | `animated`        | `animated`          | If `true`, the toast will animate.                                                                                                                                                                                                                                     | `boolean`                                                                              | `true`      |
 | `buttons`         | --                  | An array of buttons for the toast.                                                                                                                                                                                                                                     | `(string \| ToastButton)[] \| undefined`                                               | `undefined` |
-| `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                                                                                                                                                                                   | `string \| undefined`                                                                  | `undefined` |
+| `closeButtonText` | `close-button-text` | <span style="color:red">**[DEPRECATED]**</span> Use `buttons` instead. Text to display in the close button.<br/><br/>                                                                                                                                                  | `string \| undefined`                                                                  | `undefined` |
 | `color`           | `color`             | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `string \| undefined`                                                                  | `undefined` |
 | `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                       | `string \| string[] \| undefined`                                                      | `undefined` |
 | `duration`        | `duration`          | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.                                                                                                                                                           | `number`                                                                               | `0`         |
@@ -185,8 +183,8 @@ export const ToastExample: React.FunctionComponent = () => {
 | `message`         | `message`           | Message to be shown in the toast.                                                                                                                                                                                                                                      | `string \| undefined`                                                                  | `undefined` |
 | `mode`            | `mode`              | The mode determines which platform styles to use.                                                                                                                                                                                                                      | `"ios" \| "md"`                                                                        | `undefined` |
 | `position`        | `position`          | The position of the toast on the screen.                                                                                                                                                                                                                               | `"bottom" \| "middle" \| "top"`                                                        | `'bottom'`  |
-| `showCloseButton` | `show-close-button` | If `true`, the close button will be displayed.                                                                                                                                                                                                                         | `boolean`                                                                              | `false`     |
-| `translucent`     | `translucent`       | If `true`, the toast will be translucent.                                                                                                                                                                                                                              | `boolean`                                                                              | `false`     |
+| `showCloseButton` | `show-close-button` | <span style="color:red">**[DEPRECATED]**</span> Use `buttons` instead. If `true`, the close button will be displayed.<br/><br/>                                                                                                                                        | `boolean`                                                                              | `false`     |
+| `translucent`     | `translucent`       | If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).                                                   | `boolean`                                                                              | `false`     |
 
 
 ## Events
@@ -244,24 +242,24 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name              | Description                 |
-| ----------------- | --------------------------- |
-| `--background`    | Background of the toast     |
-| `--border-color`  | Border color of the toast   |
-| `--border-radius` | Border radius of the toast  |
-| `--border-style`  | Border style of the toast   |
-| `--border-width`  | Border width of the toast   |
-| `--box-shadow`    | Box shadow of the toast     |
-| `--button-color`  | Color of the button text    |
-| `--color`         | Color of the toast text     |
-| `--end`           | Position from the end       |
-| `--height`        | Height of the toast         |
-| `--max-height`    | Maximum height of the toast |
-| `--max-width`     | Maximum width of the toast  |
-| `--min-height`    | Minimum height of the toast |
-| `--min-width`     | Minimum width of the toast  |
-| `--start`         | Position from the start     |
-| `--width`         | Width of the toast          |
+| Name              | Description                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| `--background`    | Background of the toast                                                                                |
+| `--border-color`  | Border color of the toast                                                                              |
+| `--border-radius` | Border radius of the toast                                                                             |
+| `--border-style`  | Border style of the toast                                                                              |
+| `--border-width`  | Border width of the toast                                                                              |
+| `--box-shadow`    | Box shadow of the toast                                                                                |
+| `--button-color`  | Color of the button text                                                                               |
+| `--color`         | Color of the toast text                                                                                |
+| `--end`           | Position from the right if direction is left-to-right, and from the left if direction is right-to-left |
+| `--height`        | Height of the toast                                                                                    |
+| `--max-height`    | Maximum height of the toast                                                                            |
+| `--max-width`     | Maximum width of the toast                                                                             |
+| `--min-height`    | Minimum height of the toast                                                                            |
+| `--min-width`     | Minimum width of the toast                                                                             |
+| `--start`         | Position from the left if direction is left-to-right, and from the right if direction is right-to-left |
+| `--width`         | Width of the toast                                                                                     |
 
 
 ## Dependencies

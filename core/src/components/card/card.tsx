@@ -1,7 +1,7 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, RouterDirection } from '../../interface';
+import { Color, Mode, RouterDirection } from '../../interface';
 import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -17,8 +17,6 @@ import { createColorClasses, openURL } from '../../utils/theme';
   scoped: true
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
-
-  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your application's color palette.
@@ -79,20 +77,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (this.href !== undefined || this.button);
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        [`${mode}`]: true,
-
-        ...createColorClasses(this.color),
-        'card-disabled': this.disabled,
-        'ion-activatable': this.isClickable()
-      }
-    };
-  }
-
-  render() {
+  private renderCard(mode: Mode) {
     const clickable = this.isClickable();
 
     if (!clickable) {
@@ -100,8 +85,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         <slot></slot>
       ];
     }
-    const mode = getIonMode(this);
-    const { href, win, routerDirection } = this;
+    const { href, routerDirection } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
     const attrs = (TagType === 'button')
       ? { type: this.type }
@@ -117,11 +101,28 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
         {...attrs}
         class="card-native"
         disabled={this.disabled}
-        onClick={(ev: Event) => openURL(win, href, ev, routerDirection)}
+        onClick={(ev: Event) => openURL(href, ev, routerDirection)}
       >
         <slot></slot>
         {clickable && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
+    );
+  }
+
+  render() {
+    const mode = getIonMode(this);
+    return (
+      <Host
+        class={{
+          [mode]: true,
+
+          ...createColorClasses(this.color),
+          'card-disabled': this.disabled,
+          'ion-activatable': this.isClickable()
+        }}
+      >
+        {this.renderCard(mode)}
+      </Host>
     );
   }
 }

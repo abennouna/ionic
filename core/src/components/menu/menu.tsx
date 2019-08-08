@@ -1,6 +1,7 @@
-import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { config, getIonMode } from '../../global/ionic-global';
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
 import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
@@ -93,7 +94,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEnd(window, this.side);
+    this.isEndSide = isEnd(this.side);
   }
 
   /**
@@ -496,60 +497,59 @@ export class Menu implements ComponentInterface, MenuI {
     this.afterAnimation(false);
   }
 
-  hostData() {
-    const { isEndSide, type, disabled, isPaneVisible } = this;
-    return {
-      role: 'navigation',
-      class: {
-        [`${this.mode}`]: true,
-        [`menu-type-${type}`]: true,
-        'menu-enabled': !disabled,
-        'menu-side-end': isEndSide,
-        'menu-side-start': !isEndSide,
-        'menu-pane-visible': isPaneVisible
-      }
-    };
-  }
-
   render() {
-    return [
-      <div
-        class="menu-inner"
-        ref={el => this.menuInnerEl = el}
-      >
-        <slot></slot>
-      </div>,
+    const { isEndSide, type, disabled, mode, isPaneVisible } = this;
 
-      <ion-backdrop
-        ref={el => this.backdropEl = el}
-        class="menu-backdrop"
-        tappable={false}
-        stopPropagation={false}
-      />
-    ];
+    return (
+      <Host
+        role="navigation"
+        class={{
+          [mode]: true,
+          [`menu-type-${type}`]: true,
+          'menu-enabled': !disabled,
+          'menu-side-end': isEndSide,
+          'menu-side-start': !isEndSide,
+          'menu-pane-visible': isPaneVisible
+        }}
+      >
+        <div
+          class="menu-inner"
+          ref={el => this.menuInnerEl = el}
+        >
+          <slot></slot>
+        </div>
+
+        <ion-backdrop
+          ref={el => this.backdropEl = el}
+          class="menu-backdrop"
+          tappable={false}
+          stopPropagation={false}
+        />
+      </Host>
+    );
   }
 }
 
-function computeDelta(
+const computeDelta = (
   deltaX: number,
   isOpen: boolean,
   isEndSide: boolean
-): number {
+): number => {
   return Math.max(0, isOpen !== isEndSide ? -deltaX : deltaX);
-}
+};
 
-function checkEdgeSide(
+const checkEdgeSide = (
   win: Window,
   posX: number,
   isEndSide: boolean,
   maxEdgeStart: number
-): boolean {
+): boolean => {
   if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;
   }
-}
+};
 
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';

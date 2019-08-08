@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Prop, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, Prop, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Config, SpinnerConfig, SpinnerTypes } from '../../interface';
+import { Color, SpinnerConfig, SpinnerTypes } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 import { SPINNERS } from './spinner-configs';
@@ -12,7 +13,6 @@ import { SPINNERS } from './spinner-configs';
   shadow: true
 })
 export class Spinner implements ComponentInterface {
-  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The color to use from your application's color palette.
@@ -38,7 +38,7 @@ export class Spinner implements ComponentInterface {
   @Prop() paused = false;
 
   private getName(): SpinnerTypes {
-    const name = this.name || this.config.get('spinner');
+    const name = this.name || config.get('spinner');
     const mode = getIonMode(this);
     if (name) {
       return name;
@@ -46,21 +46,9 @@ export class Spinner implements ComponentInterface {
     return (mode === 'ios') ? 'lines' : 'crescent';
   }
 
-  hostData() {
-    const mode = getIonMode(this);
-    return {
-      class: {
-        ...createColorClasses(this.color),
-        [`${mode}`]: true,
-        [`spinner-${this.getName()}`]: true,
-        'spinner-paused': !!this.paused || this.config.getBoolean('_testing')
-      }
-    };
-  }
-
   render() {
+    const mode = getIonMode(this);
     const name = this.getName();
-
     const spinner = SPINNERS[name] || SPINNERS['lines'];
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
     const svgs: any[] = [];
@@ -76,11 +64,22 @@ export class Spinner implements ComponentInterface {
       }
     }
 
-    return svgs;
+    return (
+      <Host
+        class={{
+          ...createColorClasses(this.color),
+          [mode]: true,
+          [`spinner-${name}`]: true,
+          'spinner-paused': !!this.paused || config.getBoolean('_testing')
+        }}
+      >
+        {svgs}
+      </Host>
+    );
   }
 }
 
-function buildCircle(spinner: SpinnerConfig, duration: number, index: number, total: number) {
+const buildCircle = (spinner: SpinnerConfig, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = `${duration}ms`;
 
@@ -89,9 +88,9 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
       <circle transform="translate(32,32)" r={data.r}></circle>
     </svg>
   );
-}
+};
 
-function buildLine(spinner: SpinnerConfig, duration: number, index: number, total: number) {
+const buildLine = (spinner: SpinnerConfig, duration: number, index: number, total: number) => {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = `${duration}ms`;
 
@@ -100,4 +99,4 @@ function buildLine(spinner: SpinnerConfig, duration: number, index: number, tota
       <line transform="translate(32,32)" y1={data.y1} y2={data.y2}></line>
     </svg>
   );
-}
+};
