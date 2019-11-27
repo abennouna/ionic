@@ -1199,6 +1199,10 @@ export namespace Components {
     */
     'color'?: Color;
     /**
+    * How the bottom border should be displayed on the list header.
+    */
+    'lines'?: 'full' | 'inset' | 'none';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -2137,7 +2141,7 @@ export namespace Components {
     */
     'autocorrect': 'on' | 'off';
     /**
-    * Set the cancel button icon. Only applies to `md` mode.
+    * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
     */
     'cancelButtonIcon': string;
     /**
@@ -2145,7 +2149,7 @@ export namespace Components {
     */
     'cancelButtonText': string;
     /**
-    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
     */
     'clearIcon'?: string;
     /**
@@ -2177,9 +2181,9 @@ export namespace Components {
     */
     'placeholder': string;
     /**
-    * The icon to use as the search icon.
+    * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
     */
-    'searchIcon': string;
+    'searchIcon'?: string;
     /**
     * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
     */
@@ -4440,7 +4444,7 @@ declare namespace LocalJSX {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when a keyboard input ocurred.
+    * Emitted when a keyboard input occurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
@@ -4640,6 +4644,10 @@ declare namespace LocalJSX {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
+    /**
+    * How the bottom border should be displayed on the list header.
+    */
+    'lines'?: 'full' | 'inset' | 'none';
     /**
     * The mode determines which platform styles to use.
     */
@@ -5362,7 +5370,7 @@ declare namespace LocalJSX {
     */
     'autocorrect'?: 'on' | 'off';
     /**
-    * Set the cancel button icon. Only applies to `md` mode.
+    * Set the cancel button icon. Only applies to `md` mode. Defaults to `"arrow-back-sharp"`.
     */
     'cancelButtonIcon'?: string;
     /**
@@ -5370,7 +5378,7 @@ declare namespace LocalJSX {
     */
     'cancelButtonText'?: string;
     /**
-    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+    * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close-sharp"` for `md`.
     */
     'clearIcon'?: string;
     /**
@@ -5414,7 +5422,7 @@ declare namespace LocalJSX {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when a keyboard input ocurred.
+    * Emitted when a keyboard input occurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
@@ -5422,7 +5430,7 @@ declare namespace LocalJSX {
     */
     'placeholder'?: string;
     /**
-    * The icon to use as the search icon.
+    * The icon to use as the search icon. Defaults to `"search-outline"` in `ios` mode and `"search-sharp"` in `md` mode.
     */
     'searchIcon'?: string;
     /**
@@ -5869,7 +5877,7 @@ declare namespace LocalJSX {
     */
     'onIonFocus'?: (event: CustomEvent<void>) => void;
     /**
-    * Emitted when a keyboard input ocurred.
+    * Emitted when a keyboard input occurred.
     */
     'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
     /**
